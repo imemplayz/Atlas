@@ -72,21 +72,7 @@ public class Vol {
         this.availableSeats = availableSeats;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Vol vol)) return false;
-        return vol_id == vol.vol_id &&
-                availableSeats == vol.availableSeats &&
-                Objects.equals(departure, vol.departure) &&
-                Objects.equals(destination, vol.destination) &&
-                Objects.equals(duration, vol.duration);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(vol_id, departure, destination, duration, availableSeats);
-    }
 
     @Override
     public String toString() {

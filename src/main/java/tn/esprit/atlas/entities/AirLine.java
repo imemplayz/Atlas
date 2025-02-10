@@ -67,13 +67,6 @@ public class AirLine {
     }
 
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        AirLine compagnie = (AirLine) obj;
-        return id == compagnie.id && nom.equals(compagnie.nom);
-    }
 
 
     @Override
