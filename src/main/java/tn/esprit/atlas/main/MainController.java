@@ -19,6 +19,8 @@ public class MainController {
     private Button switchToVolsButton;
     @FXML
     private Button switchToAirlinesButton;
+    @FXML
+    private Button switchToForumButton;
 
     @FXML
     private void switchToSignIn() throws IOException {
@@ -67,4 +69,18 @@ public class MainController {
         // Set the new root to the existing scene
         currentScene.setRoot(airlinesRoot);
     }
+
+    @FXML
+    private void switchToForum() throws IOException {
+        // Load the sign-in view
+        Parent forumRoot = FXMLLoader.load(getClass().getResource("/tn/esprit/atlas/views/Forum_view.fxml"));
+
+        // Get the current scene
+        Scene currentScene = switchToForumButton.getScene();
+
+        // Set the new root to the existing scene
+        currentScene.setRoot(forumRoot);
+    }
+
+
 }
