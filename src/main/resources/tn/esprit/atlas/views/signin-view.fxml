@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="TOP_CENTER" prefHeight="496.0" prefWidth="875.0" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox>
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="76.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/ATLAS_LOGO.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="101.0" prefWidth="875.0" spacing="5.0">
+         <children>
+            <Text fill="#333333" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME BACK" wrappingWidth="179.7469253540039">
+               <font>
+                  <Font name="Babas Neue Regular" size="38.0" />
+               </font>
+            </Text>
+            <Text fill="#414141" strokeType="OUTSIDE" strokeWidth="0.0" text="Let’s continue exploring the world together your next adventure is just a sign-in away." wrappingWidth="278.0803527832031">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </VBox>
+      <VBox prefHeight="126.0" prefWidth="875.0" spacing="10.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="855.0" spacing="10.0">
+               <children>
+                  <StackPane prefHeight="58.0" prefWidth="58.0" style="-fx-background-color: #0162AB; -fx-background-radius: 10;">
+                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/icons/Email_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <TextField prefHeight="70.0" prefWidth="298.0" promptText="email..." style="-fx-background-radius: 10; -fx-background-color: #E9E9E9; -fx-border-color: none;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="855.0" spacing="10.0">
+               <children>
+                  <StackPane prefHeight="58.0" prefWidth="58.0" style="-fx-background-color: #0162AB; -fx-background-radius: 10;">
+                     <children>
+                        <ImageView fitHeight="52.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/icons/Password_icon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <PasswordField prefHeight="58.0" prefWidth="298.0" promptText="password..." style="-fx-background-color: #E9E9E9; -fx-background-radius: 10; -fx-border-color: none;" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </VBox>
+      <VBox prefHeight="50.0" prefWidth="875.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="368.0" style="-fx-background-radius: 10; -fx-background-color: #0162AB;" text="Sign In" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </VBox>
+   </children>
+</VBox>
