@@ -5,11 +5,13 @@ import tn.esprit.atlas.services.UserService;
 
 import java.util.List;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 public class UserController {
 
     private UserService userService = new UserService();
 
-    public void createUser(User user) {
+    public void createUser(User user) throws SQLIntegrityConstraintViolationException {
         userService.addUser(user);
     }
 

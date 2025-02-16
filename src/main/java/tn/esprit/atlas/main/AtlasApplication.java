@@ -15,6 +15,8 @@ public class AtlasApplication extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/tn/esprit/atlas/views/main-view.fxml"));
         Scene scene = new Scene(root);
 
+        scene.getStylesheets().add(getClass().getResource("/tn/esprit/atlas/css/style.css").toExternalForm());
+
         // Bind scene dimensions to stage dimensions
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             root.prefWidth((double) newVal);

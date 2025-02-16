@@ -15,3 +15,27 @@
     -fx-font-size: 16px;
     -fx-text-fill: #333;
 }
+
+.customInput:hover {
+    -fx-border-color: #0162AB;
+}
+.clickable-text {
+    -fx-fill: #0162ab;
+    -fx-cursor: hand;
+}
+#goBackButton{
+    -fx-cursor: hand;
+}
+#goBackButton:hover{
+    -fx-border-color: #0383e5;
+    -fx-background-radius: 10px;
+}
+.bold-title{
+    -fx-font-weight: bold;
+}
+.signin_image{
+    -fx-border-radius: 10 0 0 10;
+}
+.overlay{
+    -fx-stroke: none;
+}

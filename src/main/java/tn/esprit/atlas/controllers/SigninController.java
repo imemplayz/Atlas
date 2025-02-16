@@ -4,39 +4,44 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class SigninController {
 
     public Button signInButton;
-    public TextField passwordField;
-    public TextField emailField;
     @FXML
     private Button goBackButton;
 
     @FXML
     private void handleGoBack() throws IOException {
-        // Load the main view
-        Parent mainRoot = FXMLLoader.load(getClass().getResource("/tn/esprit/atlas/views/main-view.fxml"));
+        loadScene("/tn/esprit/atlas/views/main-view.fxml");
+    }
 
-        // Get the current scene
-        Scene currentScene = goBackButton.getScene();
+    @FXML
+    private void handleGoToSignUp(MouseEvent event) throws IOException {
+        loadScene("/tn/esprit/atlas/views/signup-view.fxml");
+    }
 
-        // Load the CSS file
-        String css = this.getClass().getResource("/tn/esprit/atlas/css/signin.css").toExternalForm();
+    private void loadScene(String fxmlPath) throws IOException {
+        // Load the FXML file
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
 
-        // Create a new scene with the mainRoot and apply the CSS
-        Scene newScene = new Scene(mainRoot);
-        newScene.getStylesheets().add(css);
-
-        // Set the new scene to the stage
+        // Get the current stage
         Stage stage = (Stage) goBackButton.getScene().getWindow();
-        stage.setScene(newScene);
+
+        // Preserve window size
+        double width = stage.getWidth();
+        double height = stage.getHeight();
+
+        // Set new root while keeping size
+        stage.getScene().setRoot(root);
+        stage.setWidth(width);
+        stage.setHeight(height);
     }
 
     public void handleSignIn(ActionEvent actionEvent) {
