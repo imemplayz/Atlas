@@ -1,39 +1,33 @@
 package tn.esprit.atlas.entities;
 
 public class AirLine {
-    private int id;
+    private int airline_id;
     private String nom;
     private String pays;
     private String logo;
 
-
-
     public AirLine() {
     }
 
-
-    public AirLine(int id, String nom, String pays, String logo) {
-        this.id = id;
+    public AirLine(int airline_id, String nom, String pays, String logo) {
+        this.airline_id = airline_id;
         this.nom = nom;
         this.pays = pays;
         this.logo = logo;
-
     }
 
-    public AirLine( String nom, String pays, String logo) {
+    public AirLine(String nom, String pays, String logo) {
         this.nom = nom;
         this.pays = pays;
         this.logo = logo;
-
     }
 
-
-    public int getId() {
-        return id;
+    public int getAirline_id() {
+        return airline_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAirline_id(int airline_id) {
+        this.airline_id = airline_id;
     }
 
     public String getNom() {
@@ -60,23 +54,13 @@ public class AirLine {
         this.logo = logo;
     }
 
-
-
-    public void afficherDetails() {
-        System.out.println("Compagnie: " + nom + " | Pays: " + pays );
-    }
-
-
-
-
     @Override
     public String toString() {
         return "CompagnieAerienne{" +
-                "id=" + id +
+                "airline_id=" + airline_id +
                 ", nom='" + nom + '\'' +
                 ", pays='" + pays + '\'' +
                 ", logo='" + logo + '\'' +
                 '}';
     }
 }
-

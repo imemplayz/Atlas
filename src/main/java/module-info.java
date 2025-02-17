@@ -8,4 +8,5 @@ module tn.esprit.atlas.main {
     opens tn.esprit.atlas.main to javafx.fxml;
     exports tn.esprit.atlas.controllers to javafx.fxml;
     opens tn.esprit.atlas.controllers to javafx.fxml;
+    opens tn.esprit.atlas.entities to javafx.base;
 }

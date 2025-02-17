@@ -47,7 +47,7 @@ public class MainController {
     @FXML
     private void switchToVols() throws IOException {
         // Load the sign-in view
-        Parent volsRoot = FXMLLoader.load(getClass().getResource("/tn/esprit/atlas/views/vols-view.fxml"));
+        Parent volsRoot = FXMLLoader.load(getClass().getResource("/tn/esprit/atlas/views/vols_view.fxml"));
 
         // Get the current scene
         Scene currentScene = switchToVolsButton.getScene();
@@ -59,7 +59,18 @@ public class MainController {
     @FXML
     private void switchToAirlines() throws IOException {
         // Load the sign-in view
-        Parent airlinesRoot = FXMLLoader.load(getClass().getResource("/tn/esprit/atlas/views/airlines-view.fxml"));
+        Parent airlinesRoot = FXMLLoader.load(getClass().getResource("/tn/esprit/atlas/views/airline_view.fxml"));
+
+        // Get the current scene
+        Scene currentScene = switchToAirlinesButton.getScene();
+
+        // Set the new root to the existing scene
+        currentScene.setRoot(airlinesRoot);
+    }
+    @FXML
+    private void addAirline() throws IOException {
+        // Load the sign-in view
+        Parent airlinesRoot = FXMLLoader.load(getClass().getResource("/tn/esprit/atlas/views/AjouterAirLine_view.fxml"));
 
         // Get the current scene
         Scene currentScene = switchToAirlinesButton.getScene();
@@ -68,3 +79,4 @@ public class MainController {
         currentScene.setRoot(airlinesRoot);
     }
 }
+

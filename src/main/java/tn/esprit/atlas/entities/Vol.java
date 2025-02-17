@@ -7,33 +7,40 @@ public class Vol {
     private int vol_id;
     private String departure;
     private String destination;
-    private String duration;
+    private String departureDate;
+    private String returnDate;
     private int availableSeats;
+    private double price;
+    private int airline_id;  // Ajout de l'attribut airline_id pour la clé étrangère
 
-
+    // Constructeurs
     public Vol() {}
 
-    public Vol(int vol_id, String departure, String destination, String duration, int availableSeats) {
+    public Vol(int vol_id, String departure, String destination, String departureDate, String returnDate, int availableSeats, double price, int airline_id) {
         this.vol_id = vol_id;
         this.departure = departure;
         this.destination = destination;
-        this.duration = duration;
+        this.departureDate = departureDate;
+        this.returnDate = returnDate;
         this.availableSeats = availableSeats;
+        this.price = price;
+        this.airline_id = airline_id;
     }
 
-
-    public Vol(String departure, String destination, String duration, int availableSeats) {
+    public Vol(String departure, String destination, String departureDate, String returnDate, int availableSeats, double price, int airline_id) {
         this.departure = departure;
         this.destination = destination;
-        this.duration = duration;
+        this.departureDate = departureDate;
+        this.returnDate = returnDate;
         this.availableSeats = availableSeats;
+        this.price = price;
+        this.airline_id = airline_id;
     }
 
-
-    public int getId() {
+    // Getters
+    public int getVol_id() {
         return vol_id;
     }
-
 
     public String getDeparture() {
         return departure;
@@ -43,17 +50,29 @@ public class Vol {
         return destination;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getDepartureDate() {
+        return departureDate;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
     }
 
     public int getAvailableSeats() {
         return availableSeats;
     }
 
+    public double getPrice() {
+        return price;
+    }
 
-    public void setId(int id) {
-        this.vol_id = id;
+    public int getAirline_id() {
+        return airline_id;  // Getter pour airline_id
+    }
+
+    // Setters
+    public void setVol_id(int vol_id) {
+        this.vol_id = vol_id;
     }
 
     public void setDeparture(String departure) {
@@ -64,25 +83,38 @@ public class Vol {
         this.destination = destination;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setDepartureDate(String departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
     }
 
     public void setAvailableSeats(int availableSeats) {
         this.availableSeats = availableSeats;
     }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
+    public void setAirline_id(int airline_id) {
+        this.airline_id = airline_id;  // Setter pour airline_id
+    }
 
+    // Méthode toString pour affichage
     @Override
     public String toString() {
         return "Vol{" +
-                "id=" + vol_id +
+                "vol_id=" + vol_id +
                 ", departure='" + departure + '\'' +
                 ", destination='" + destination + '\'' +
-                ", duration='" + duration + '\'' +
+                ", departureDate='" + departureDate + '\'' +
+                ", returnDate='" + returnDate + '\'' +
                 ", availableSeats=" + availableSeats +
+                ", price=" + price +
+                ", airline_id=" + airline_id +
                 '}';
     }
-
 }
