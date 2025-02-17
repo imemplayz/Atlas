@@ -116,4 +116,68 @@ public class UserService {
             e.printStackTrace();
         }
     }
+
+    // ➤ Find User by Email or ID
+    public User findUser(String email, int id) {
+        String query = "SELECT * FROM Utilisateur WHERE email = ? OR id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setInt(2, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("surname"),
+                        resultSet.getInt("age"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("adresse"),
+                        resultSet.getString("role"),
+                        resultSet.getString("profileImage"),
+                        resultSet.getString("num_telph"),
+                        resultSet.getString("voyageurPreferences"),
+                        resultSet.getString("destinations_preferrees"),
+                        resultSet.getDouble("budget")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // ➤ Sign In User
+    public User signInUser(String email, String password) {
+        String query = "SELECT * FROM Utilisateur WHERE email = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String hashedPassword = resultSet.getString("password");
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    return new User(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("surname"),
+                            resultSet.getInt("age"),
+                            resultSet.getString("email"),
+                            hashedPassword,
+                            resultSet.getString("adresse"),
+                            resultSet.getString("role"),
+                            resultSet.getString("profileImage"),
+                            resultSet.getString("num_telph"),
+                            resultSet.getString("voyageurPreferences"),
+                            resultSet.getString("destinations_preferrees"),
+                            resultSet.getDouble("budget")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

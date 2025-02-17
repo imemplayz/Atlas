@@ -73,7 +73,7 @@
                                     </ImageView>
                                  </children>
                               </StackPane>
-                              <TextField prefHeight="70.0" prefWidth="298.0" promptText="email..." style="-fx-background-radius: 10; -fx-background-color: #E9E9E9; -fx-border-color: none;" />
+                              <TextField fx:id="emailField" prefHeight="70.0" prefWidth="298.0" promptText="email..." style="-fx-background-radius: 10; -fx-background-color: #E9E9E9; -fx-border-color: none;" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="855.0" spacing="10.0">
@@ -87,7 +87,7 @@
                                     </ImageView>
                                  </children>
                               </StackPane>
-                              <PasswordField prefHeight="58.0" prefWidth="298.0" promptText="password..." style="-fx-background-color: #E9E9E9; -fx-background-radius: 10; -fx-border-color: none;" />
+                              <PasswordField fx:id="passwordField" prefHeight="58.0" prefWidth="298.0" promptText="password..." style="-fx-background-color: #E9E9E9; -fx-background-radius: 10; -fx-border-color: none;" />
                            </children>
                         </HBox>
                      </children>
@@ -100,7 +100,7 @@
                   </VBox>
                   <VBox prefHeight="74.0" prefWidth="354.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="58.0" prefWidth="370.0" style="-fx-background-radius: 10; -fx-background-color: #0162AB;" text="Sign In" textAlignment="CENTER" textFill="WHITE">
+                        <Button mnemonicParsing="false" prefHeight="58.0" prefWidth="370.0" style="-fx-background-radius: 10; -fx-background-color: #0162AB;" text="Sign In" textAlignment="CENTER" textFill="WHITE" onAction="#handleSignIn">
                            <font>
                               <Font name="System Bold" size="20.0" />
                            </font>
