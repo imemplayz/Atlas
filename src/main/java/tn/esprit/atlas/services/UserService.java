@@ -5,6 +5,7 @@ import tn.esprit.atlas.main.DatabaseConnection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UserService {
 
@@ -15,15 +16,17 @@ public class UserService {
     }
 
     // ➤ Add User
-    public void addUser(User user) {
+    public void addUser(User user) throws SQLIntegrityConstraintViolationException {
         String query = "INSERT INTO Utilisateur (name, surname, age, email, password, adresse, role, profileImage, num_telph, voyageurPreferences, destinations_preferrees, budget) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setInt(3, user.getAge());
             preparedStatement.setString(4, user.getEmail());
-            preparedStatement.setString(5, user.getPassword());
+            preparedStatement.setString(5, hashedPassword);
             preparedStatement.setString(6, user.getAdresse());
             preparedStatement.setString(7, user.getRole());
             preparedStatement.setString(8, user.getProfileImage());
@@ -34,8 +37,12 @@ public class UserService {
 
             preparedStatement.executeUpdate();
             System.out.println("✅ User added successfully!");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            // Re-throw the exception to handle it in the controller
+            throw e;
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Failed to add user to the database.", e);
         }
     }
 
@@ -108,5 +115,69 @@ public class UserService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // ➤ Find User by Email or ID
+    public User findUser(String email, int id) {
+        String query = "SELECT * FROM Utilisateur WHERE email = ? OR id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setInt(2, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("surname"),
+                        resultSet.getInt("age"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("adresse"),
+                        resultSet.getString("role"),
+                        resultSet.getString("profileImage"),
+                        resultSet.getString("num_telph"),
+                        resultSet.getString("voyageurPreferences"),
+                        resultSet.getString("destinations_preferrees"),
+                        resultSet.getDouble("budget")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // ➤ Sign In User
+    public User signInUser(String email, String password) {
+        String query = "SELECT * FROM Utilisateur WHERE email = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String hashedPassword = resultSet.getString("password");
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    return new User(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("surname"),
+                            resultSet.getInt("age"),
+                            resultSet.getString("email"),
+                            hashedPassword,
+                            resultSet.getString("adresse"),
+                            resultSet.getString("role"),
+                            resultSet.getString("profileImage"),
+                            resultSet.getString("num_telph"),
+                            resultSet.getString("voyageurPreferences"),
+                            resultSet.getString("destinations_preferrees"),
+                            resultSet.getDouble("budget")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

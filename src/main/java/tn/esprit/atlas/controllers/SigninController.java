@@ -4,42 +4,89 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import tn.esprit.atlas.entities.User;
+import tn.esprit.atlas.utils.UserSession;
 
 import java.io.IOException;
 
 public class SigninController {
 
+    @FXML
     public Button signInButton;
-    public TextField passwordField;
-    public TextField emailField;
+
     @FXML
     private Button goBackButton;
 
     @FXML
+    private TextField emailField;
+
+    @FXML
+    private TextField passwordField;
+
+    private UserController userController = new UserController(); // Instance of UserController
+
+    @FXML
     private void handleGoBack() throws IOException {
-        // Load the main view
-        Parent mainRoot = FXMLLoader.load(getClass().getResource("/tn/esprit/atlas/views/main-view.fxml"));
+        loadScene("/tn/esprit/atlas/views/main-view.fxml");
+    }
 
-        // Get the current scene
-        Scene currentScene = goBackButton.getScene();
+    @FXML
+    private void handleGoToSignUp(MouseEvent event) throws IOException {
+        loadScene("/tn/esprit/atlas/views/signup-view.fxml");
+    }
 
-        // Load the CSS file
-        String css = this.getClass().getResource("/tn/esprit/atlas/css/signin.css").toExternalForm();
+    private void loadScene(String fxmlPath) throws IOException {
+        // Load the FXML file
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
 
-        // Create a new scene with the mainRoot and apply the CSS
-        Scene newScene = new Scene(mainRoot);
-        newScene.getStylesheets().add(css);
-
-        // Set the new scene to the stage
+        // Get the current stage
         Stage stage = (Stage) goBackButton.getScene().getWindow();
-        stage.setScene(newScene);
+
+        // Preserve window size
+        double width = stage.getWidth();
+        double height = stage.getHeight();
+
+        // Set new root while keeping size
+        stage.getScene().setRoot(root);
+        stage.setWidth(width);
+        stage.setHeight(height);
     }
 
     public void handleSignIn(ActionEvent actionEvent) {
-        // Add your sign-in logic here
+        String email = emailField.getText();
+        String password = passwordField.getText();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            showAlert("Error", "Please enter both email and password.");
+            return;
+        }
+
+        User user = userController.signInUser(email, password);
+
+        if (user != null) {
+            UserSession.setUser(user); // Set the user session
+            showAlert("Success", "Sign-in successful!");
+            try {
+                loadScene("/tn/esprit/atlas/views/profile-view.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            showAlert("Error", "Invalid email or password.");
+        }
+    }
+
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
