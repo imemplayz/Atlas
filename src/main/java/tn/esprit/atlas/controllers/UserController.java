@@ -2,13 +2,14 @@ package tn.esprit.atlas.controllers;
 
 import tn.esprit.atlas.entities.User;
 import tn.esprit.atlas.services.UserService;
+import tn.esprit.atlas.utils.UserSession;
 
 import java.util.List;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 public class UserController {
 
-    private UserService userService = new UserService();
+    private static UserService userService = new UserService();
 
     // ➤ Create User
     public void createUser(User user) throws SQLIntegrityConstraintViolationException {
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     // ➤ Remove User
-    public void removeUser(int userId) {
+    public static void removeUser(int userId) {
         userService.deleteUser(userId);
     }
 
@@ -39,5 +40,12 @@ public class UserController {
     // ➤ Sign In User and Return the User Object
     public User signInUser(String email, String password) {
         return userService.signInUser(email, password); // Returns the user if credentials are correct, null otherwise
+    }
+
+    // ➤ Logout User and Clear Session
+    public static void logout() {
+        // Clear the current user session
+        UserSession.clearSession();
+        System.out.println("User logged out successfully!");
     }
 }

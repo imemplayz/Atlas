@@ -4,11 +4,12 @@
     -fx-text-fill: white;           /* White text */
     -fx-font-size: 14px;
     -fx-padding: 20 15 20 15;   /* Top, Right, Bottom, Left padding */
-    -fx-background-radius: 5px;     /* Rounded corners */
+    -fx-background-radius: 10px;     /* Rounded corners */
+    -fx-cursor: hand;
 }
 
 .button:hover {
-    -fx-background-color: #45a049; /* Darker green on hover */
+    -fx-background-color: #004577; /* Darker green on hover */
 }
 
 .label {
@@ -56,4 +57,27 @@
 }
 .profile-optionsbutton:hover{
     -fx-background-color: #e4e4e4;
+}
+.profile-label{
+    -fx-font-size: 15px;
+    -fx-font-weight: 10px;
+}
+.profile-input{
+    -fx-background-color: #f2f3f5;
+    -fx-background-radius: 10px;
+    -fx-border-color: none;
+}
+.profile-deletebutton{
+    -fx-background-color: #ef4444;
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-animated: true;
+}
+.profile-deletebutton:hover{
+    -fx-background-color: #fb5e5e;
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-animated: true;
 }
