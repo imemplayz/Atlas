@@ -1,5 +1,6 @@
 package tn.esprit.atlas.main;
 
+import javafx.scene.control.TextArea;
 import tn.esprit.atlas.services.HotelService;
 import tn.esprit.atlas.entities.Hotel;
 import javafx.fxml.FXML;
@@ -11,14 +12,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.scene.Node;
+import java.io.File;
+import javafx.event.ActionEvent;
+
 import java.io.IOException;
-
-
-
-import java.io.IOException;
+import java.util.List;
 
 public class MainController {
 
@@ -51,7 +53,11 @@ public class MainController {
     @FXML
     private Button viewReviewsButton;
 
+    @FXML
+    private ImageView imageView;
 
+    @FXML
+    private File uploadedImageFile;
 
     // FXML fields for hotel form
     @FXML
@@ -61,7 +67,25 @@ public class MainController {
     @FXML
     private TextField hotelRatingField;
     @FXML
-    private Button submitHotelButton;
+    private TextField hotelImageField;
+    @FXML
+    private TextField hotelRoomsField;
+    @FXML
+    private TextField hotelRentField;
+    @FXML
+    private TextArea hotelFacilitiesField; // Change from TextField to TextArea
+    @FXML
+    private TextField checkInField;
+    @FXML
+    private TextField checkOutField;
+    @FXML
+    private TextField hotelContactField;
+    @FXML
+    private TextField hotelCityField;
+    @FXML
+    private TextField hotelLatitudeField;
+    @FXML
+    private TextField hotelLongitudeField;
 
     private HotelService hotelService = new HotelService();
 
@@ -69,25 +93,58 @@ public class MainController {
     @FXML
     private void handleSubmitHotelForm() {
         try {
+            // Retrieve values from the form fields
             String name = hotelNameField.getText();
             String address = hotelAddressField.getText();
-            float rating = Float.parseFloat(hotelRatingField.getText());
-
-            // Create hotel object and add it to the database
-            Hotel hotel = new Hotel();
-            hotel.setName(name);
-            hotel.setAddress(address);
-            hotel.setRating(rating);
+            Hotel hotel = getHotel(name, address);
 
             // Add hotel using HotelService
             hotelService.add(hotel);
 
             // Show success message
             showAlert("Hotel Added", "Hotel added successfully!", AlertType.INFORMATION);
+
+            // Clear the form fields after submission (optional)
+            clearFormFields();
+        } catch (NumberFormatException e) {
+            // Handle invalid number input
+            showAlert("Input Error", "Please enter valid numbers for rating, available rooms, price, latitude, and longitude.", AlertType.ERROR);
         } catch (Exception e) {
             // Show error message if something goes wrong
             showAlert("Error", "Failed to add hotel. Please try again.", AlertType.ERROR);
+            e.printStackTrace(); // Log the exception for debugging
         }
+    }
+
+    private Hotel getHotel(String name, String address) {
+        float rating = Float.parseFloat(hotelRatingField.getText());
+        String imageUrl = hotelImageField.getText();
+        int availableRooms = Integer.parseInt(hotelRoomsField.getText());
+        double pricePerNight = Double.parseDouble(hotelRentField.getText());
+        String facilities = hotelFacilitiesField.getText();
+        String checkInTime = checkInField.getText();
+        String checkOutTime = checkOutField.getText();
+        String contactNumber = hotelContactField.getText();
+        String city = hotelCityField.getText();
+        double latitude = Double.parseDouble(hotelLatitudeField.getText());
+        double longitude = Double.parseDouble(hotelLongitudeField.getText());
+
+        // Create hotel object and set all fields
+        Hotel hotel = new Hotel();
+        hotel.setName(name);
+        hotel.setAddress(address);
+        hotel.setRating(rating);
+        hotel.setImageUrl(imageUrl);
+        hotel.setAvailableRooms(availableRooms);
+        hotel.setPricePerNight(pricePerNight);
+        hotel.setFacilities(List.of(facilities.split(","))); // Convert comma-separated string to list
+        hotel.setCheckInTime(checkInTime);
+        hotel.setCheckOutTime(checkOutTime);
+        hotel.setContactNumber(contactNumber);
+        hotel.setCity(city);
+        hotel.setLatitude(latitude);
+        hotel.setLongitude(longitude);
+        return hotel;
     }
 
     // Method to show alert messages
@@ -99,12 +156,24 @@ public class MainController {
         alert.showAndWait();
     }
 
+    // Helper method to clear form fields (optional)
+    private void clearFormFields() {
+        hotelNameField.clear();
+        hotelAddressField.clear();
+        hotelRatingField.clear();
+        hotelImageField.clear();
+        hotelRoomsField.clear();
+        hotelRentField.clear();
+        hotelFacilitiesField.clear();
+        checkInField.clear();
+        checkOutField.clear();
+        hotelContactField.clear();
+        hotelCityField.clear();
+        hotelLatitudeField.clear();
+        hotelLongitudeField.clear();
+    }
 
-
-
-
-
-    // Navigation Methods (already existing)
+    // Navigation Methods
     @FXML
     private void switchToSignIn() throws IOException {
         Parent signInRoot = FXMLLoader.load(getClass().getResource("/tn/esprit/atlas/views/signin-view.fxml"));
@@ -189,5 +258,19 @@ public class MainController {
     private void handleViewReviews() throws IOException {
         // Logic to view reviews (e.g., load a list of reviews)
         System.out.println("Viewing reviews...");
+    }
+
+    @FXML
+    private void handleUploadImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
+
+        uploadedImageFile = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+
+        if (uploadedImageFile != null) {
+            Image image = new Image(uploadedImageFile.toURI().toString());
+            imageView.setImage(image); // Display the uploaded image
+            hotelImageField.setText(uploadedImageFile.toURI().toString()); // Set the image URL in the form field
+        }
     }
 }
